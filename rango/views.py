@@ -20,7 +20,6 @@ def index(request):
 
     # Call the helper function to handle the cookies.
     visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
 
     # Return a rendered response to send to the client.
     # We make use of the shortcut function to make our lives easier.
@@ -34,8 +33,14 @@ def index(request):
     return response
 
 def about(request):
-    context_dict = {'author':'This tutorial has been put together by mooz.'}
-
+    # Initialise context dictionary
+    context_dict = {}
+    context_dict['author'] = 'This tutorial has been put together by mooz.'
+    
+    # Call helper function to handle cookies.
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    
     return render(request, 'rango/about.html', context=context_dict)
 
 def show_category(request, category_name_slug):
